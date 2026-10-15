@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#034a44" />
+    <meta
+      name="description"
+      content="A simple campus community board to help lost belongings find their way home."
+    />
+    <title>JssFind | Campus Lost and Found</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23034a44'/%3E%3Ccircle cx='13' cy='13' r='7' fill='none' stroke='%23ff9e0b' stroke-width='3'/%3E%3Cpath d='m18 18 8 8' stroke='%23ff9e0b' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="home">
+    <header class="site-header">
+      <div class="site-header-inner">
+        <a class="brand" href="/" aria-label="JssFind home">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <circle cx="13.5" cy="13.5" r="8.5" />
+              <path d="m20 20 7 7" />
+            </svg>
+          </span>
+          <span class="brand-name">JssFind</span>
+        </a>
+
+        <nav class="primary-nav" aria-label="Main navigation">
+          <a href="/">Home</a>
+          <a href="/browse">Browse items</a>
+          <a href="#help-centre">Help Centre</a>
+          <a href="#pickup-guidelines">Pickup Guidelines</a>
+        </nav>
+
+        <div class="header-actions">
+          <button class="button login-button" data-sign-in type="button">Login</button>
+          <div class="account-menu" id="account-menu" hidden>
+            <span class="user-avatar" id="user-avatar" aria-hidden="true">F</span>
+            <span class="user-name" id="user-name">Campus member</span>
+            <button class="button button-quiet button-small" data-sign-out type="button">
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero page-width" id="home">
+        <div class="hero-copy">
+          <h1>Lost Something On Campus?<br /><span>Let’s Help You Find It</span></h1>
+          <p class="hero-description">
+            Searched every corner of campus? Don’t stress! Post, search, or report lost
+            and found items in minutes. Reconnect with what matters.
+          </p>
+          <div class="hero-actions">
+            <button class="button button-cream" data-sign-in type="button">
+              Sign in to browse
+            </button>
+            <a class="button button-orange" href="/browse">Browse Lost Items</a>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <img
+            class="hero-illustration"
+            src="./assets/findr-campus-search.png"
+            alt="Two students searching through campus lost-and-found reports"
+          />
+        </div>
+      </section>
+
+      <section class="how-section page-width" id="help-centre" aria-labelledby="how-title">
+        <div class="how-heading">
+          <div class="eyebrow">HELP CENTRE</div>
+          <h2 id="how-title">How JssFind works</h2>
+          <p>Post a lost or found item, then update your post when it’s been returned.</p>
+        </div>
+        <div class="how-grid">
+          <article class="how-card">
+            <span class="step-number">01</span>
+            <h3>Sign in</h3>
+            <p>Use Google to join the campus board.</p>
+          </article>
+          <article class="how-card">
+            <span class="step-number">02</span>
+            <h3>Search or share</h3>
+            <p>Look through recent posts or tell the community what you found.</p>
+          </article>
+          <article class="how-card">
+            <span class="step-number">03</span>
+            <h3>Close the loop</h3>
+            <p>When an item is back where it belongs, mark it complete to remove the post.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="how-section page-width pickup-guidelines" id="pickup-guidelines" aria-labelledby="guidelines-title">
+        <div class="how-heading">
+          <div class="eyebrow">PICKUP GUIDELINES</div>
+          <h2 id="guidelines-title">Make every hand-off a safe one.</h2>
+        </div>
+        <div class="how-grid">
+          <article class="how-card">
+            <span class="step-number">01</span>
+            <h3>Meet on campus</h3>
+            <p>Choose a familiar, public campus spot for the hand-off.</p>
+          </article>
+          <article class="how-card">
+            <span class="step-number">02</span>
+            <h3>Confirm the item</h3>
+            <p>Ask the person to describe a detail that isn’t in the public post.</p>
+          </article>
+          <article class="how-card">
+            <span class="step-number">03</span>
+            <h3>Keep details private</h3>
+            <p>Only share a contact method you’re comfortable showing to signed-in users.</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand brand-footer" href="/" aria-label="JssFind home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none">
+            <circle cx="13.5" cy="13.5" r="8.5" />
+            <path d="m20 20 7 7" />
+          </svg>
+        </span>
+        <span class="brand-name">JssFind</span>
+      </a>
+      <span>Made for looking out for each other.</span>
+    </footer>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

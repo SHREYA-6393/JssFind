@@ -1,0 +1,68 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /items/{itemId} {
+      function signedIn() {
+        return request.auth != null;
+      }
+
+      function validItem(data) {
+        return data.itemType in ['lost', 'found']
+          && data.title is string
+          && data.title.size() > 0
+          && data.title.size() <= 80
+          && data.category in ['Electronics', 'Keys', 'ID & cards', 'Clothing', 'Books', 'Other']
+          && data.description is string
+          && data.description.size() <= 500
+          && data.location is string
+          && data.location.size() > 0
+          && data.location.size() <= 100
+          && data.eventDate is string
+          && data.eventDate.size() == 10
+          && (!('meetingPoint' in data)
+            || (data.meetingPoint is string
+              && data.meetingPoint.size() <= 160))
+          && (!('contactInfo' in data)
+            || (data.contactInfo is string
+              && data.contactInfo.size() <= 160))
+          && (!('imageUrl' in data)
+            || (data.imageUrl is string
+              && data.imageUrl.size() <= 2048
+              && data.imageUrl.matches('https://res[.]cloudinary[.]com/.*')));
+      }
+
+      allow read: if signedIn();
+
+      allow create: if signedIn()
+        && request.resource.data.keys().hasAll([
+          'itemType', 'title', 'category', 'description', 'location',
+          'eventDate', 'ownerUid', 'status', 'createdAt'
+        ])
+        && request.resource.data.keys().hasOnly([
+          'itemType', 'title', 'category', 'description', 'location',
+          'eventDate', 'meetingPoint', 'contactInfo', 'ownerUid',
+          'status', 'createdAt', 'imageUrl'
+        ])
+        && validItem(request.resource.data)
+        && request.resource.data.ownerUid == request.auth.uid
+        && request.resource.data.status == 'open'
+        && request.resource.data.createdAt == request.time;
+
+      allow update: if signedIn()
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerUid == resource.data.ownerUid
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+          'itemType', 'title', 'category', 'description', 'location',
+          'eventDate', 'meetingPoint', 'contactInfo', 'imageUrl',
+          'status', 'updatedAt'
+        ])
+        && validItem(request.resource.data)
+        && request.resource.data.status in ['open', 'resolved']
+        && request.resource.data.updatedAt == request.time;
+
+      allow delete: if signedIn()
+        && resource.data.ownerUid == request.auth.uid;
+    }
+  }
+}
